@@ -1,8 +1,6 @@
-import React from 'react'
+import React from "react";
 import contacts from "./contacts.json";
-import './App.css';
-
-
+import "./App.css";
 
 function App() {
   let fiveArr = contacts.slice(0, 5);
@@ -10,10 +8,33 @@ function App() {
 
   const [celebs, setCelebs] = React.useState(fiveArr);
 
+  const generateRandom = () => {
+    let randomIndex = Math.floor(Math.random() * contacts.length);
+    let newValue = true;
+
+    celebs.forEach((contact) => {
+      if (contact.name === contacts[randomIndex].name) {
+        newValue = false;
+      }
+    });
+
+    if (!newValue) {
+      generateRandom();
+    } else {
+      setCelebs(celebs.concat(contacts[randomIndex]));
+    }
+  };
 
   return (
     <div className="App">
- <table style={{ border: "1px solid black" }}>
+      <button
+        onClick={() => {
+          generateRandom();
+        }}
+      >
+        Add Random Celeb
+      </button>
+      <table style={{ border: "1px solid black" }}>
         <tr>
           <th>Picture</th>
           <th>Name</th>
@@ -23,26 +44,25 @@ function App() {
           <th>Action</th>
         </tr>
 
-        {celebs.map((props, i) => {
+        {celebs.map((celeb, i) => {
           return (
             <tr key={i}>
               <td>
-                <img style={{ width: "100px" }} src={props.pictureUrl} />
+                <img style={{ width: "100px" }} src={celeb.pictureUrl} />
               </td>
               <td>
-                <p>{props.name}</p>
+                <p>{celeb.name}</p>
               </td>
               <td>
-                <p>{Math.round(props.popularity * 100) / 100}</p>
+                <p>{Math.round(celeb.popularity * 100) / 100}</p>
               </td>
               <td>
-                <p>{props.wonOscar ? "🏆" : ""}</p>
+                <p>{celeb.wonOscar ? "🏆" : ""}</p>
               </td>
               <td>
-                <p>{props.wonEmmy ? "🏆" : ""}</p>
+                <p>{celeb.wonEmmy ? "🏆" : ""}</p>
               </td>
-              <td>
-              </td>
+              <td></td>
             </tr>
           );
         })}
