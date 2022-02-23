@@ -31,6 +31,19 @@ function App() {
     });
     setCelebs(filteredArray);
   };
+  const sortByName = () => {
+    let celebsCopy = [...celebs];
+    let byName = celebsCopy.sort((a, b) => a.name.localeCompare(b.name));
+    setCelebs(byName);
+  };
+
+  const sortByPopularity = () => {
+    let celebsCopy = [...celebs];
+    let byPopularity = celebsCopy.sort(
+      (a, b) => b.popularity.toFixed(2) - a.popularity.toFixed(2)
+    );
+    setCelebs(byPopularity);
+  };
 
   return (
     <div className="App">
@@ -41,6 +54,8 @@ function App() {
       >
         Add Random Celeb
       </button>
+      <button onClick={sortByName}>Sort by Name</button>
+      <button onClick={sortByPopularity}>Sort by Popularity</button>
       <table style={{ border: "1px solid black" }}>
         <tr>
           <th>Picture</th>
