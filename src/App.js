@@ -25,6 +25,13 @@ function App() {
     }
   };
 
+  const removeContact = (contactToRemove) => {
+    let filteredArray = celebs.filter((celeb) => {
+      return celeb !== contactToRemove;
+    });
+    setCelebs(filteredArray);
+  };
+
   return (
     <div className="App">
       <button
@@ -62,7 +69,9 @@ function App() {
               <td>
                 <p>{celeb.wonEmmy ? "🏆" : ""}</p>
               </td>
-              <td></td>
+              <td>
+                <button onClick={() => removeContact(celeb)}>Delete</button>
+              </td>
             </tr>
           );
         })}
